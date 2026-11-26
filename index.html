@@ -5,16 +5,30 @@
 <title>Password Helper &amp; Generator</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#0d1728;color:#f1f5ff;font:16px system-ui}main{max-width:960px;margin:auto;padding:clamp(24px,6vw,72px)}h1{font-size:clamp(1.65rem,4.5vw,2.55rem);letter-spacing:-.035em;margin:0}h2{margin:0 0 10px;font-size:1.25rem}p{color:#bdcbe2;line-height:1.5;margin:0 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:16px;margin:32px 0 22px}section{background:#1a263a;border:1px solid #38485f;border-radius:16px;padding:22px}label{display:block;margin:12px 0 5px}input,output{width:100%;padding:11px;border:1px solid #62758f;border-radius:8px;background:#0d1728;color:inherit;font:inherit}output{display:block;overflow-wrap:anywhere;font-family:monospace;margin:14px 0 6px;min-height:45px}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}button{border:0;border-radius:8px;padding:10px 14px;background:#58d8ef;color:#142536;font:600 1rem system-ui;cursor:pointer}button.secondary{background:#d4e1f3}button:disabled{opacity:.45;cursor:default}.comparison:not([hidden]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.comparison>div{min-width:0;border:1px solid #38485f;border-radius:12px;padding:14px}@media(max-width:580px){.comparison:not([hidden]){grid-template-columns:1fr}}:focus-visible{outline:3px solid #fff;outline-offset:3px}.status{min-height:24px;margin:8px 0 0;font-size:.9rem}.weak{color:#ffd19a}footer{color:#bdcbe2}footer strong{color:#f1f5ff}
-</style>
-<style>
 h1{margin-bottom:8px}.topic{border-left:4px solid #58d8ef;padding-left:10px;margin-bottom:10px;color:#58d8ef;font-size:.86rem;font-weight:650}.checks{display:flex;flex-wrap:wrap;gap:8px 14px;margin:12px 0}.checks label{display:flex;align-items:center;gap:6px;margin:0}.checks input{width:auto;accent-color:#58d8ef}fieldset{border:0;padding:0;margin:16px 0}legend{font-weight:600}.results{padding-left:24px}.results li{padding:7px 0}.results li div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}.results .result-actions{justify-content:flex-start}.results code{overflow-wrap:anywhere;min-width:0;font-size:1rem;user-select:all}.results button{padding:5px 9px}.weak strong{display:block;font-size:.9rem;color:#ffd19a}
+body { background: #0d1627; font: 16px/1.5 Arial, sans-serif; }
+main { max-width: 850px; padding: clamp(18px, 5vw, 46px); }
+header { padding-bottom: 15px; border-bottom: 1px solid #43546b; }
+h1 { font-size: clamp(1.45rem, 4vw, 2rem); letter-spacing: -0.02em; }
+header p:last-child { margin-bottom: 0; }
+.topic { border-left-width: 3px; }
+.grid { grid-template-columns: 1fr; gap: 14px; margin: 18px 0; }
+.grid section { min-width: 0; border-radius: 6px; background: #142035; }
+input, button, .comparison > div { border-radius: 4px; }
+input[type="number"] { display: block; width: 8rem; }
+button.secondary { background: #26384e; color: #f1f5ff; }
+.results .secondary { border: 1px solid #52647b; }
+.range { display: flex; align-items: center; gap: 14px; max-width: 24rem; }
+.range input { padding: 0; border: 0; background: none; accent-color: #58d8ef; cursor: pointer; }
+.range b { min-width: 2ch; font-size: 1.2rem; color: #58d8ef; }
+.results code{font:600 1.2rem/1.4 ui-monospace,Consolas,monospace;letter-spacing:.02em}.results li{border-bottom:1px solid #26384e}.results li:last-child{border-bottom:0}footer small{display:block;margin-top:8px;color:#8fa3c0}
 </style>
-<style>.grid{grid-template-columns:1fr}.grid section{min-width:0}</style><main>
+<main>
 <header><p class="topic">Password Security and User Authentication</p><h1>Password Helper &amp; Generator</h1><p>Generate a password or try the demo below.</p></header>
 <div class="grid"><section>
 <h2>Generate random passwords</h2>
 <form id="generator">
-<label for="length">Password length (6–15 characters)</label><input id="length" type="number" min="6" max="15" value="6" required>
+<label for="length">Password length (6–20 characters)</label><div class="range"><input id="length" type="range" min="6" max="20" value="15"><b id="length-value">15</b></div>
 <fieldset>
 <legend>Include</legend>
 <div id="groups" class="checks">
@@ -29,14 +43,14 @@ h1{margin-bottom:8px}.topic{border-left:4px solid #58d8ef;padding-left:10px;marg
 <ol id="passwords" class="results" aria-label="Generated passwords"></ol>
 <p id="status" class="status" role="status"></p>
 </section></div><div class="grid"><section>
-<h2>Try it with a name</h2>
+<h2>Try it with data</h2>
 <p>Enter a made-up name and birthday for the demo.</p>
 <form id="details" autocomplete="off">
-<label for="first">First name</label><input id="first" value="Ana" required maxlength="40">
-<label for="last">Last name</label><input id="last" value="Dema" required maxlength="40">
-<label for="birthday">Date of birth</label><input id="birthday" type="date" value="2006-04-15" required>
-<label for="suggestion-length">Password length for both columns (6–15 characters)</label>
-<input id="suggestion-length" type="number" min="6" max="15" value="6" required>
+<label for="first">First name</label><input id="first" placeholder="First name" required maxlength="40">
+<label for="last">Last name</label><input id="last" placeholder="Last name" required maxlength="40">
+<label for="birthday">Date of birth</label><input id="birthday" type="date" required>
+<label for="suggestion-length">Password length for both columns (6–20 characters)</label>
+<div class="range"><input id="suggestion-length" type="range" min="6" max="20" value="15"><b id="suggestion-value">15</b></div>
 <div class="actions"><button class="secondary">Generate</button></div>
 </form>
 
@@ -47,18 +61,22 @@ h1{margin-bottom:8px}.topic{border-left:4px solid #58d8ef;padding-left:10px;marg
 </div><div><h2>3 passwords to avoid</h2>
 <ol id="weak" class="results weak"></ol></div>
 </div>
-</section></div><footer><strong>Use a unique password for each account and enable MFA.</strong> MFA adds another check if someone gets your password.</footer>
+</section></div><footer><strong>Use a unique password for each account and enable MFA.</strong> MFA adds another check if someone gets your password.<small>Everything runs in your browser; nothing is saved or sent.</small></footer>
 </main>
 <script>
 const first = document.querySelector('#first');
 const last = document.querySelector('#last');
-const birthday = document.querySelector('#birthday');
 const suggestions = document.querySelector('#suggestions');
+const birthday = document.querySelector('#birthday');
 const lengthInput = document.querySelector('#length');
 const suggestionLength = document.querySelector('#suggestion-length');
 const weakList = document.querySelector('#weak');
 const passwords = document.querySelector('#passwords');
 const status = document.querySelector('#status');
+for (const [input, id] of [['#length', '#length-value'], ['#suggestion-length', '#suggestion-value']]) {
+  const field = document.querySelector(input), shown = document.querySelector(id);
+  field.addEventListener('input', () => { shown.textContent = field.value; });
+}
 const detailsStatus = document.querySelector('#details-status');
 const groups = {
   upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -99,18 +117,6 @@ async function copyPassword(code, number, feedback) {
   }
 }
 
-function downloadPassword(value) {
-  const file = new Blob([value], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(file);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'password.txt';
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
 function showPasswords(list, count, length, selected, feedback) {
   list.replaceChildren();
   const choices = new Set();
@@ -127,15 +133,9 @@ function showPasswords(list, count, length, selected, feedback) {
     button.className = 'secondary';
     button.setAttribute('aria-label', 'Copy password ' + (index + 1));
     button.addEventListener('click', () => copyPassword(code, index + 1, feedback));
-    const download = document.createElement('button');
-    download.type = 'button';
-    download.textContent = 'Download .txt';
-    download.className = 'secondary';
-    download.setAttribute('aria-label', 'Download password ' + (index + 1) + ' as TXT');
-    download.addEventListener('click', () => downloadPassword(code.textContent));
     const actions = document.createElement('div');
     actions.className = 'result-actions';
-    actions.append(button, download);
+    actions.append(button);
     line.append(code, actions);
     row.append(line);
     list.append(row);
@@ -147,7 +147,7 @@ function generate() {
   passwords.replaceChildren();
   const selected = [...document.querySelectorAll('#groups input:checked')].map(input => groups[input.value]);
   if (!lengthInput.reportValidity()) {
-    status.textContent = 'Choose a length from 6 to 15.';
+    status.textContent = 'Choose a length from 6 to 20.';
     return;
   }
   if (!selected.length) {
